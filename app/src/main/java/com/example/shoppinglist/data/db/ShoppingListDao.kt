@@ -11,9 +11,11 @@ interface ShoppingListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(item: ShoppingListItem)
 
+    // Delete item
     @Delete
     suspend fun delete(item: ShoppingListItem)
 
+    // Get all items
     @Query("SELECT * FROM shoppingList_items")
     fun getAllShoppingListItems(): LiveData<List<ShoppingListItem>>
 }

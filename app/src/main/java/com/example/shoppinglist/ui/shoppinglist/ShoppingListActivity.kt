@@ -1,6 +1,9 @@
 package com.example.shoppinglist.ui.shoppinglist
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -43,5 +46,37 @@ class ShoppingListActivity : AppCompatActivity() {
                         }
                     }).show()
         }
+
     }
+
+
+    // Menu
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Action bar clicks
+        val id = item.getItemId()
+
+        if (id == R.id.action_settings) {
+            Toast.makeText(this, "Item One Clicked", Toast.LENGTH_SHORT).show()
+            return true
+        }
+        if (id == R.id.action_clear_list) {
+            Toast.makeText(this, "Item Two Clicked", Toast.LENGTH_SHORT).show()
+            return true
+        }
+        if (id == R.id.action_sort_list) {
+            Toast.makeText(this, "Item Three Clicked", Toast.LENGTH_SHORT).show()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+
+    }
+
 }
