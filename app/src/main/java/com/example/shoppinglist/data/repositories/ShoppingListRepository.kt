@@ -9,6 +9,11 @@ class ShoppingListRepository(
     // Database Methods
     suspend fun upsert(item: ShoppingListItem) = db.getShoppingListDao().upsert(item)
     suspend fun delete(item: ShoppingListItem) = db.getShoppingListDao().delete(item)
-
     fun getAllShoppingListItems() = db.getShoppingListDao().getAllShoppingListItems()
+
+    //TODO try this instead of it doesn't work
+    //suspend fun deleteAll() = db.clearAllTables()
+    suspend fun deleteAll() = db.getShoppingListDao().deleteAll()
+
+
 }

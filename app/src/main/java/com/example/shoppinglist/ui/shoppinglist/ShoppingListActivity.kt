@@ -15,6 +15,7 @@ import com.example.shoppinglist.data.other.ShoppingListItemAdapter
 import com.example.shoppinglist.data.repositories.ShoppingListRepository
 import kotlinx.android.synthetic.main.shoppinglist_main.*
 
+
 class ShoppingListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,9 +24,7 @@ class ShoppingListActivity : AppCompatActivity() {
         val database = ShoppingListDatabase(this)
         val repository = ShoppingListRepository(database)
         val factory = ShoppingViewModelFactory(repository)
-
         val viewModel = ViewModelProviders.of(this, factory).get(ShoppingListViewModel::class.java)
-
         val adapter = ShoppingListItemAdapter(listOf(), viewModel)
 
         recyclerView_ShoppingListItems.layoutManager = LinearLayoutManager(this)
@@ -60,18 +59,27 @@ class ShoppingListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Action bar clicks
+
+        val database = ShoppingListDatabase(this)
+        val repository = ShoppingListRepository(database)
+        val factory = ShoppingViewModelFactory(repository)
+        val viewModel = ViewModelProviders.of(this, factory).get(ShoppingListViewModel::class.java)
+        val adapter = ShoppingListItemAdapter(listOf(), viewModel)
+
         val id = item.getItemId()
 
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "Item One Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show()
             return true
         }
+
+        // Delete all items
         if (id == R.id.action_clear_list) {
-            Toast.makeText(this, "Item Two Clicked", Toast.LENGTH_SHORT).show()
-            return true
+            viewModel.deleteAllShoppingListItems()
+            Toast.makeText(this, "List cleared!", Toast.LENGTH_SHORT).show()
         }
         if (id == R.id.action_sort_list) {
-            Toast.makeText(this, "Item Three Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Sort Clicked", Toast.LENGTH_SHORT).show()
             return true
         }
 

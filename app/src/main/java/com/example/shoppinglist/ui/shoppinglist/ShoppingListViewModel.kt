@@ -19,4 +19,8 @@ class ShoppingListViewModel (
     }
 
     fun getAllShoppingListItems() = repository.getAllShoppingListItems()
+
+    fun deleteAllShoppingListItems() = CoroutineScope(Dispatchers.Main).launch {
+        repository.deleteAll()
+    }
 }

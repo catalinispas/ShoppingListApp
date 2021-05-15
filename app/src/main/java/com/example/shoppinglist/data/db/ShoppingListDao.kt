@@ -18,4 +18,8 @@ interface ShoppingListDao {
     // Get all items
     @Query("SELECT * FROM shoppingList_items")
     fun getAllShoppingListItems(): LiveData<List<ShoppingListItem>>
+
+    // Delete all items
+    @Query("DELETE FROM shoppingList_items")
+    suspend fun deleteAll()
 }
