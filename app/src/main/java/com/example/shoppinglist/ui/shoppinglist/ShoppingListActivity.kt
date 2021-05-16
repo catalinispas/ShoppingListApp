@@ -19,6 +19,15 @@ import kotlinx.android.synthetic.main.dialog_delete_all.*
 import kotlinx.android.synthetic.main.shoppinglist_main.*
 
 class ShoppingListActivity : AppCompatActivity() {
+    private val shareableList = arrayListOf<String>()
+
+    fun createShareableList(adapter: ShoppingListItemAdapter) {
+        shareableList.clear()
+        for ( item in adapter.items ) {
+            shareableList.add("${item.quantity} ${item.name}")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.shoppinglist_main)
@@ -32,9 +41,17 @@ class ShoppingListActivity : AppCompatActivity() {
         recyclerView_ShoppingListItems.layoutManager = LinearLayoutManager(this)
         recyclerView_ShoppingListItems.adapter = adapter
 
+        // Testing the sort
+        button_sort_test.setOnClickListener {
+            viewModel.getAllAlphabetically()
+            adapter.notifyDataSetChanged()
+        }
+
+
         // Update recyclerview upon change
         viewModel.getAllShoppingListItems().observe(this, Observer {
             adapter.items = it
+            createShareableList(adapter)
             adapter.notifyDataSetChanged()
         })
 
@@ -44,6 +61,7 @@ class ShoppingListActivity : AppCompatActivity() {
             AddShopingListItemDialog(this, object : AddDialogListener {
                         override fun onButtonClicked(item: ShoppingListItem) {
                             viewModel.upsert(item)
+                            createShareableList(adapter)
                         }
                     }).show()
         }
@@ -102,7 +120,7 @@ class ShoppingListActivity : AppCompatActivity() {
                 }
 
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "${itemList.joinToString(", ")}")
+                putExtra(Intent.EXTRA_TEXT, "${shareableList.joinToString(", ").replace("[", "").replace("]", "")}")
                 type = "text/plain"
             }
 
