@@ -45,13 +45,13 @@ class ShoppingListItemAdapter(
                 viewModel.delete(currentShoppingItem)
             }
         }
-
-        // Get sorted
     }
     
     override fun getItemCount(): Int {
         return items.size
     }
+
+
 
     inner class ShoppingListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
