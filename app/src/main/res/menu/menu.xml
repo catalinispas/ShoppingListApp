@@ -11,6 +11,6 @@
         android:id="@+id/action_clear_list"
         android:title="Clear list"/>
     <item
-        android:id="@+id/action_sort_list"
+        android:id="@+id/btn_sort_list"
         android:title="Sort list"/>
 </menu>

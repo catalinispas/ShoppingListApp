@@ -30,9 +30,6 @@ class ShoppingListItemAdapter(
             viewModel.delete(currentShoppingItem)
         }
 
-        // Delete All
-        //TODO implement logic
-
         // Increase item quantity
         holder.itemView.icon_plus.setOnClickListener {
             currentShoppingItem.quantity++
@@ -48,8 +45,10 @@ class ShoppingListItemAdapter(
                 viewModel.delete(currentShoppingItem)
             }
         }
-    }
 
+        // Get sorted
+    }
+    
     override fun getItemCount(): Int {
         return items.size
     }

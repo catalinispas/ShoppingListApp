@@ -3,6 +3,7 @@ package com.example.shoppinglist.ui.shoppinglist
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -36,6 +37,7 @@ class ShoppingListActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
         })
 
+
         // Add a new item
         button_add_item.setOnClickListener {
             AddShopingListItemDialog(this,
@@ -66,6 +68,12 @@ class ShoppingListActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this, factory).get(ShoppingListViewModel::class.java)
         val adapter = ShoppingListItemAdapter(listOf(), viewModel)
 
+        // Update recyclerview upon change
+        viewModel.getAllAlphabetically().observe(this, Observer {
+            adapter.items = it
+            adapter.notifyDataSetChanged()
+        })
+
         val id = item.getItemId()
 
         if (id == R.id.action_settings) {
@@ -78,8 +86,9 @@ class ShoppingListActivity : AppCompatActivity() {
             viewModel.deleteAllShoppingListItems()
             Toast.makeText(this, "List cleared!", Toast.LENGTH_SHORT).show()
         }
-        if (id == R.id.action_sort_list) {
-            Toast.makeText(this, "Sort Clicked", Toast.LENGTH_SHORT).show()
+        if (id == R.id.btn_sort_list) {
+            viewModel.getAllAlphabetically()
+            Toast.makeText(this, "Sorted Alphabetically", Toast.LENGTH_SHORT).show()
             return true
         }
 
