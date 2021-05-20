@@ -25,6 +25,7 @@ class ShoppingListItemAdapter(
         holder.itemView.text_name.text = currentShoppingItem.name
         holder.itemView.text_quantity.text = "${currentShoppingItem.quantity}"
 
+
         // Delete item
         holder.itemView.icon_delete.setOnClickListener {
             viewModel.delete(currentShoppingItem)
@@ -38,7 +39,7 @@ class ShoppingListItemAdapter(
 
         // Decrease item quantity ( or remove if 0 )
         holder.itemView.icon_minus.setOnClickListener {
-            if (currentShoppingItem.quantity > 0) {
+            if (currentShoppingItem.quantity > 1) {
                 currentShoppingItem.quantity--
                 viewModel.upsert(currentShoppingItem)
             } else {
@@ -50,8 +51,6 @@ class ShoppingListItemAdapter(
     override fun getItemCount(): Int {
         return items.size
     }
-
-
 
     inner class ShoppingListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 

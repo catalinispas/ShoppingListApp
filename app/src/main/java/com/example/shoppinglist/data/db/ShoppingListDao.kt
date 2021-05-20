@@ -20,7 +20,7 @@ interface ShoppingListDao {
     fun getAllShoppingListItems(): LiveData<List<ShoppingListItem>>
 
     // Get all items ( alphabetically )
-    @Query ("SELECT * FROM shoppingList_items ORDER BY item_name ASC")
+    @Query ("SELECT * FROM shoppingList_items ORDER BY item_name")
     fun getAllAlphabetically(): LiveData<List<ShoppingListItem>>
 
     // Get all items ( quantity )

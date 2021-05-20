@@ -19,6 +19,8 @@ class ShoppingListViewModel (
     }
 
     fun getAllShoppingListItems() = repository.getAllShoppingListItems()
+
+    // Sorts
     fun getAllAlphabetically() = repository.getAllAlphabetically()
     fun getAllQty() = repository.getAllQty()
 

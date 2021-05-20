@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_settings"
-        android:icon="@drawable/icon_settings"
+        android:icon="@drawable/ic_nightmode"
         app:showAsAction="always"
         android:title="Settings"/>
     <item

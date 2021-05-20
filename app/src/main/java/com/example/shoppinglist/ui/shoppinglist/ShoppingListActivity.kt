@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.iterator
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.shoppinglist_main.*
 
 class ShoppingListActivity : AppCompatActivity() {
     private val shareableList = arrayListOf<String>()
+    var themeIsLight = true
 
     fun createShareableList(adapter: ShoppingListItemAdapter) {
         shareableList.clear()
@@ -41,13 +43,6 @@ class ShoppingListActivity : AppCompatActivity() {
         recyclerView_ShoppingListItems.layoutManager = LinearLayoutManager(this)
         recyclerView_ShoppingListItems.adapter = adapter
 
-        // Testing the sort
-        button_sort_test.setOnClickListener {
-            viewModel.getAllAlphabetically()
-            adapter.notifyDataSetChanged()
-        }
-
-
         // Update recyclerview upon change
         viewModel.getAllShoppingListItems().observe(this, Observer {
             adapter.items = it
@@ -65,7 +60,6 @@ class ShoppingListActivity : AppCompatActivity() {
                         }
                     }).show()
         }
-
     }
 
 
@@ -87,9 +81,17 @@ class ShoppingListActivity : AppCompatActivity() {
 
 
         // Action bar clicks by ID
+        // Night/Light mode
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show()
-            return true
+            if (themeIsLight === true ) {
+                themeIsLight = false
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                Toast.makeText(this, "Night mode activated", Toast.LENGTH_SHORT).show()
+            } else {
+                themeIsLight = true
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                Toast.makeText(this, "Light mode activated", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // Delete all items
@@ -105,8 +107,6 @@ class ShoppingListActivity : AppCompatActivity() {
 
         // Sort
         if (id == R.id.btn_sort_list) {
-            viewModel.getAllAlphabetically()
-            adapter.notifyDataSetChanged()
             Toast.makeText(this, "Sorted Alphabetically", Toast.LENGTH_SHORT).show()
             return true
         }
